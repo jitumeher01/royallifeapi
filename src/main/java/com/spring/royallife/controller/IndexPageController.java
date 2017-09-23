@@ -15,6 +15,6 @@ public class IndexPageController {
 	public ResponseEntity<?> home() {
 		
 
-		return ResponseEntity.status(HttpStatus.OK).body("Welcome To Jitu !");
+		return ResponseEntity.status(HttpStatus.OK).body("Welcome To RL !");
 	}
 }
