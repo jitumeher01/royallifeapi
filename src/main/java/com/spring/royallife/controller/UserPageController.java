@@ -51,7 +51,7 @@ public class UserPageController {
 			Hibernate.initialize(userEntity.getBankEntity());
 		}
 
-		return ResponseEntity.status(HttpStatus.OK).body("Jitu");
+		return ResponseEntity.status(HttpStatus.OK).body("Welcome To Royal Life !");
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
