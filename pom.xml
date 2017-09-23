@@ -4,11 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.spring</groupId>
-	<artifactId>royallife</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>ROOT</artifactId>
 	<packaging>war</packaging>
+	
 
 	<name>royallife</name>
+	
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -69,6 +70,7 @@
 	</dependencies>
 
 	<build>
+	<finalName>ROOT</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
