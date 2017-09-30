@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.spring.royallife.converter.BankDetailsConverter;
@@ -56,16 +57,6 @@ public class UserFacadeImpl implements UserFacade {
 		return null;
 	}
 
-	@Override
-	public UserData verifyToken(String token) {
-		UserEntity userEntity=userService.verifyToken(token);
-		if(userEntity!=null){
-			UserData userData=new UserData();
-			userConverter.convert(userEntity, userData);
-			return userData;
-		}
-		return null;
-	}
 
 	@Override
 	public void updateProfile(UserForm userForm) {
@@ -84,7 +75,7 @@ public class UserFacadeImpl implements UserFacade {
 	}
 
 	@Override
-	public void updatePassword(UserForm userForm) {
+	public void updatePassword(UserForm userForm) throws Exception {
 		userService.updatePassword(userForm);
 	}
 
@@ -174,6 +165,18 @@ public class UserFacadeImpl implements UserFacade {
 			allUserData.add(userData);
 		}
 		return allUserData;
+	}
+
+	@Override
+	public UserData getProfile(String userId) {
+		UserEntity userEntity=userService.findByUserId(userId);
+		UserData userData=new UserData();
+		if(userEntity!=null){
+			userConverter.convert(userEntity, userData);
+		}else {
+			throw new UsernameNotFoundException("User Id Not found !");
+		}		
+		return userData;
 	}
 
 }

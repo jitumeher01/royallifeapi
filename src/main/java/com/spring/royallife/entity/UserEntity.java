@@ -1,7 +1,6 @@
 package com.spring.royallife.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,40 +35,64 @@ public class UserEntity {
 	private String sponsorName;
 	private String sponsorMobile;
 	
-	private String token;
-	private Date expiryDate;
+	private boolean isEnabled=true;
+	private boolean isCredentialsNonExpired=true;
+	private boolean isAccountNonLocked=true;
+	private boolean isAccountNonExpired=true;
 
-
-
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<BankEntity> bankEntity = new HashSet<BankEntity>();
-	
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<MessageEntity> messages = new ArrayList<MessageEntity>();
-	
 
-	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private CommitEntity commit = new CommitEntity();
-	
-	
 
-	public String getToken() {
-		return token;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<RoleEntity> roles=new ArrayList<RoleEntity>();
+
+	public boolean isEnabled() {
+		return isEnabled;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 
-	public Date getExpiryDate() {
-		return expiryDate;
+	public boolean isCredentialsNonExpired() {
+		return isCredentialsNonExpired;
 	}
 
-	public void setExpiryDate(Date expiryDate) {
-		this.expiryDate = expiryDate;
+	public void setCredentialsNonExpired(boolean isCredentialsNonExpired) {
+		this.isCredentialsNonExpired = isCredentialsNonExpired;
+	}
+
+	public boolean isAccountNonLocked() {
+		return isAccountNonLocked;
+	}
+
+	public void setAccountNonLocked(boolean isAccountNonLocked) {
+		this.isAccountNonLocked = isAccountNonLocked;
+	}
+
+	public boolean isAccountNonExpired() {
+		return isAccountNonExpired;
+	}
+
+	public void setAccountNonExpired(boolean isAccountNonExpired) {
+		this.isAccountNonExpired = isAccountNonExpired;
+	}
+
+	public List<RoleEntity> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleEntity> roles) {
+		this.roles = roles;
 	}
 
 	public Set<BankEntity> getBankEntity() {
@@ -95,8 +118,6 @@ public class UserEntity {
 	public void setMessages(List<MessageEntity> messages) {
 		this.messages = messages;
 	}
-
-
 
 	public String getUserId() {
 		return userId;

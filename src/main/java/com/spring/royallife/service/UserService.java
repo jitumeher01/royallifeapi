@@ -13,15 +13,13 @@ import com.spring.royallife.form.UserForm;
 public interface UserService {
 	void register(UserForm userForm);
 
-	UserEntity verifyToken(String token);
-
 	UserEntity findByUserId(String userId);
 
 	UserEntity findByUserIdAndPassword(String userId, String password);
 
 	void updateProfile(UserForm userForm);
 
-	void updatePassword(UserForm userForm);
+	void updatePassword(UserForm userForm) throws Exception;
 
 	Set<BankEntity> getAllBank(String userId);
 

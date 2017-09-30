@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.spring.royallife.converter.UserConverter;
 import com.spring.royallife.dto.UserData;
-import com.spring.royallife.entity.AdminEntity;
 import com.spring.royallife.entity.UserEntity;
-import com.spring.royallife.entity.UserRepository;
 import com.spring.royallife.facade.AdminFacade;
 import com.spring.royallife.facade.UserFacade;
 import com.spring.royallife.form.UserForm;
+import com.spring.royallife.repository.UserRepository;
 import com.spring.royallife.service.AdminService;
 import com.spring.royallife.service.UserService;
 
@@ -31,10 +30,6 @@ public class AdminFacadeImpl implements AdminFacade {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Override
-	public AdminEntity findByAdminIdAandPassword(String adminId, String password) {
-		return adminService.findAdminByIdAndPassword(adminId, password);
-	}
 
 	@Override
 	public List<UserData> findAllUser() {

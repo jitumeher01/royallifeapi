@@ -22,8 +22,6 @@ public class UserConverterImpl implements UserConverter {
 			target.setSponsorName(source.getSponsorName());
 			target.setSponsorMobile(source.getSponsorMobile());
 			target.setState(source.getState());
-		    target.setToken(source.getToken());
-		    target.setExpiryDate(source.getExpiryDate());
 		}
 		
 	}

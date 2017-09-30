@@ -12,11 +12,9 @@ import com.spring.royallife.converter.UserConverter;
 import com.spring.royallife.dto.CommitData;
 import com.spring.royallife.dto.UserData;
 import com.spring.royallife.entity.CommitEntity;
-import com.spring.royallife.entity.CommitRepository;
-import com.spring.royallife.entity.PlanEntity;
 import com.spring.royallife.entity.UserEntity;
-import com.spring.royallife.entity.UserRepository;
 import com.spring.royallife.facade.CommitFacade;
+import com.spring.royallife.repository.CommitRepository;
 import com.spring.royallife.service.UserService;
 
 @Service
@@ -31,8 +29,6 @@ public class CommitFacadeImpl implements CommitFacade {
 	@Autowired
 	private CommitConverter commitConverter;
 
-	@Autowired
-	private UserRepository userRepository;
 	@Autowired
 	private CommitRepository commitRepository;
 

@@ -3,22 +3,21 @@ package com.spring.royallife.service.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.spring.royallife.entity.BankEntity;
-import com.spring.royallife.entity.BankRepository;
 import com.spring.royallife.entity.MessageEntity;
-import com.spring.royallife.entity.MessageRepository;
 import com.spring.royallife.entity.UserEntity;
-import com.spring.royallife.entity.UserRepository;
 import com.spring.royallife.form.BankForm;
 import com.spring.royallife.form.MessageForm;
 import com.spring.royallife.form.UserForm;
+import com.spring.royallife.repository.BankRepository;
+import com.spring.royallife.repository.MessageRepository;
+import com.spring.royallife.repository.UserRepository;
 import com.spring.royallife.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
@@ -48,20 +47,11 @@ public class UserServiceImpl implements UserService {
 			userEntity.setSponsorId(userForm.getSponsorId());
 			userEntity.setSponsorName(userForm.getSponsorName());
 			userEntity.setSponsorMobile(userForm.getSponsorMobile());
-
-			String token = UUID.randomUUID().toString();
-			Date newDate = DateUtils.addHours(new Date(), 24);
-			userEntity.setToken(token);
-			userEntity.setExpiryDate(newDate);
 			userRepository.save(userEntity);
 		}
 		
 	}
 
-	@Override
-	public UserEntity verifyToken(String token) {
-		return userRepository.findByToken(token);
-	}
 
 	@Override
 	public UserEntity findByUserId(String userId) {
@@ -70,16 +60,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserEntity findByUserIdAndPassword(String userId, String password) {
-		UserEntity userEntity=userRepository.findByUserIdAndPassword(userId, password);
-		if(userEntity!=null){
-			String token = UUID.randomUUID().toString();
-			Date newDate = DateUtils.addHours(new Date(), 24);
-			userEntity.setToken(token);
-			userEntity.setExpiryDate(newDate);
-			userRepository.save(userEntity);
-			return userEntity;
-		}	
-		return null;
+		return userRepository.findByUserIdAndPassword(userId, password);
 	}
 	
 	
@@ -106,9 +87,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updatePassword(UserForm userForm) {
+	public void updatePassword(UserForm userForm) throws Exception {
 		UserEntity userEntity=userRepository.findByUserId(userForm.getUserId());
-		userEntity.setPassword(userForm.getPassword());
+		if(userEntity!=null){
+			if(userForm.getOldPassword().equals(userEntity.getPassword())){
+				userEntity.setPassword(userForm.getPassword());
+			}else {
+				throw new Exception("Wrong Old Password ! !");
+			}
+		}else {
+			throw new UsernameNotFoundException("User Id Not found !");
+		}
+		
 	}
 
 	@Override

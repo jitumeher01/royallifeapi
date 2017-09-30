@@ -5,21 +5,18 @@ import java.util.List;
 import com.spring.royallife.dto.BankDetailData;
 import com.spring.royallife.dto.MessageData;
 import com.spring.royallife.dto.UserData;
-import com.spring.royallife.entity.UserEntity;
 import com.spring.royallife.form.BankForm;
 import com.spring.royallife.form.MessageForm;
 import com.spring.royallife.form.UserForm;
 
 public interface UserFacade {
 	UserData findByUserIdAndPassword(String userId, String password);
-	
-	UserData verifyToken(String token);
 
 	void updateProfile(UserForm userForm);
 
 	UserData getUserById(String userId);
 
-	void updatePassword(UserForm userForm);
+	void updatePassword(UserForm userForm) throws Exception;
 
 	List<BankDetailData> getAllBank(String userId);
 
@@ -40,4 +37,7 @@ public interface UserFacade {
 	List<UserData> searchListUSer(String userId);
 
 	List<UserData> getAllUser();
+	
+	
+	UserData getProfile(String userId);
 }
