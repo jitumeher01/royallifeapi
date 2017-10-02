@@ -33,7 +33,7 @@ public class CommitFacadeImpl implements CommitFacade {
 	private CommitRepository commitRepository;
 
 	@Override
-	public UserData getCommitDetails(String userId) {
+	public UserData getCommitDetails(String userId) throws Exception {
 		UserEntity userEntity = userService.findByUserId(userId);
 		UserData userData = new UserData();
 		CommitData commitData = new CommitData();
@@ -42,15 +42,17 @@ public class CommitFacadeImpl implements CommitFacade {
 		if (userEntity.getCommit() != null) {
 			commitConverter.convert(userEntity.getCommit(), commitData);
 			userData.setCommitData(commitData);
+		}else {
+			throw new Exception("User not Commit !");
 		}
 
 		return userData;
 	}
 
 	@Override
-	public void addCommit(CommitData commitData, String userId) {
+	public void addCommit(CommitData commitData) {
 		CommitEntity commitEntity = new CommitEntity();
-		UserEntity userEntity = userService.findByUserId(userId);
+		UserEntity userEntity = userService.findByUserId(commitData.getUserId());
 
 		LocalDate today = LocalDate.now();
 

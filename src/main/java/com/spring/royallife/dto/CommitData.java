@@ -16,6 +16,13 @@ public class CommitData {
 	private String name;
 	private String planNo;
 	private String plan;
+	private String userId;
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getPlan() {
 		return plan;
 	}

@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
+		http.csrf().disable().authorizeRequests()
 		.antMatchers("/api/rest/**").permitAll()
 		.antMatchers("/oauth/token").permitAll()
 		.antMatchers("/api/rest/user/**").authenticated().anyRequest().access("hasAnyRole('USER')")

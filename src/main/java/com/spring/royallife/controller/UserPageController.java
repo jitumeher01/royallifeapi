@@ -2,6 +2,7 @@ package com.spring.royallife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,7 @@ public class UserPageController {
 		return ResponseEntity.status(HttpStatus.OK).body("Success !");
 	}
 
-	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST,headers="Accept=application/json" ,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updatePassword(@RequestBody UserForm userForm) throws Exception {
 
 		if (userForm.getPassword().equals(userForm.getRePassword())) {
@@ -56,7 +57,7 @@ public class UserPageController {
 	@RequestMapping(value = "/updateBank", method = RequestMethod.POST)
 	public ResponseEntity<?> updateBank(@RequestBody BankForm bankForm) {
 		userFacade.updateBank(bankForm);
-		return ResponseEntity.status(HttpStatus.OK).body(userFacade.getAllBank(bankForm.getUserId()));
+		return ResponseEntity.status(HttpStatus.OK).body("Success !");
 	}
 
 	@RequestMapping(value = "/setDefaultBank/{id}", method = RequestMethod.GET)
