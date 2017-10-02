@@ -24,7 +24,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.checkTokenAccess("isAuthenticated()");
+		security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
 	}
 
 	@Override
@@ -36,4 +36,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	    .authorizedGrantTypes("client_credentials", "password","refresh_token")
 	    .resourceIds("oauth2-resource");
 	}
+	
+	
 }

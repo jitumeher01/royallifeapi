@@ -52,8 +52,16 @@ public class UserEntity {
 	@JsonIgnore
 	private CommitEntity commit = new CommitEntity();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<RoleEntity> roles=new ArrayList<RoleEntity>();
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<RoleEntity> roles=new HashSet<RoleEntity>();
+
+	public Set<RoleEntity> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RoleEntity> roles) {
+		this.roles = roles;
+	}
 
 	public boolean isEnabled() {
 		return isEnabled;
@@ -85,14 +93,6 @@ public class UserEntity {
 
 	public void setAccountNonExpired(boolean isAccountNonExpired) {
 		this.isAccountNonExpired = isAccountNonExpired;
-	}
-
-	public List<RoleEntity> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<RoleEntity> roles) {
-		this.roles = roles;
 	}
 
 	public Set<BankEntity> getBankEntity() {

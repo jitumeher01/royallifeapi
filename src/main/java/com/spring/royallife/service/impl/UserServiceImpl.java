@@ -1,6 +1,8 @@
 package com.spring.royallife.service.impl;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,12 +13,15 @@ import org.springframework.stereotype.Service;
 
 import com.spring.royallife.entity.BankEntity;
 import com.spring.royallife.entity.MessageEntity;
+import com.spring.royallife.entity.RoleEntity;
 import com.spring.royallife.entity.UserEntity;
+import com.spring.royallife.enums.RoleName;
 import com.spring.royallife.form.BankForm;
 import com.spring.royallife.form.MessageForm;
 import com.spring.royallife.form.UserForm;
 import com.spring.royallife.repository.BankRepository;
 import com.spring.royallife.repository.MessageRepository;
+import com.spring.royallife.repository.RoleRepository;
 import com.spring.royallife.repository.UserRepository;
 import com.spring.royallife.service.UserService;
 @Service
@@ -29,6 +34,9 @@ public class UserServiceImpl implements UserService {
 	private BankRepository bankRepository;
 	@Autowired
 	private MessageRepository messageRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Override
 	public void register(UserForm userForm) {
@@ -47,9 +55,12 @@ public class UserServiceImpl implements UserService {
 			userEntity.setSponsorId(userForm.getSponsorId());
 			userEntity.setSponsorName(userForm.getSponsorName());
 			userEntity.setSponsorMobile(userForm.getSponsorMobile());
+			RoleEntity roleEntity=new RoleEntity();
+			roleEntity.setRole(RoleName.USER.name());
+			roleEntity.setUser(userEntity);
+			userEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(roleEntity)));
 			userRepository.save(userEntity);
 		}
-		
 	}
 
 
